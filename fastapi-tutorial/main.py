@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from enum import Enum
+
 app = FastAPI()
 
 
@@ -23,3 +25,16 @@ async def get_items(item_id:int):
 @app.put("/")
 async def put():
     return {"message":"This is my out test"}
+class FoodEnum(str,Enum):
+    fruits = "fruits"
+    vegetable = "vegetables"
+    meat = "meat"
+@app.get("/foods/{food}")
+async def get_foods(food:FoodEnum):
+    if food == FoodEnum.vegetable:
+        return {"foodname": food, "message":"you are health"}
+
+    if food == FoodEnum.fruits:
+        return {"foodname":food, "messge":"you are sweet"}
+    if food == FoodEnum.meat:
+        return {"foodname":food, "message":"Thats meaty"}
